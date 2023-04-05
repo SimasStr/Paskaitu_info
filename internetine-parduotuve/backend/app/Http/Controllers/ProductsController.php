@@ -31,6 +31,14 @@ class ProductsController extends Controller
         }
     }
 
+    public function order($field, $order) {
+        try {
+            return Products::with('categories')->orderBy($field, $order)->get();                  
+        } catch(\Exception $e) {
+            return response('Nepavyko gauti produktų', 500);
+        }
+    }
+
     public function create(Request $request) {
         try {
             $data = new Products;
@@ -46,7 +54,7 @@ class ProductsController extends Controller
 
             return 'Produktas sėkmingai sukurtas';
         } catch(\Exception $e) {
-            return response($e, 500);
+            return response('Įvyko serverio klaida', 500);
         }
     }
 
